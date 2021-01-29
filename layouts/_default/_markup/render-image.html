@@ -17,7 +17,7 @@
       {{ $webpPathStatic:= printf "static/%s" $webpPath }}
 
       {{ if (fileExists $webpPathStatic) -}}
-        <source srcset="{{ $webpPath | safeURL }}" type="image/webp" >
+        <source srcset="{{ $webpPath | safeURL }}" type="image/webp" width="240" >
       {{- end }}
     {{- end }}
 
@@ -33,7 +33,7 @@
       {{ $webpPathStatic:= printf "static/%s" $webpPath }}
 
       {{ if (fileExists $webpPathStatic) -}}
-        <source srcset="{{ $webpPath | safeURL }}" type="image/webp" >
+        <source srcset="{{ $webpPath | safeURL }}" type="image/webp" width="240" >
       {{- end }}
     {{- end }}
 
@@ -44,6 +44,7 @@
       alt="{{ .Text }}"
       loading="lazy"
       decoding="async"
+      width="240"
     />
   </picture>
 {{ if .Title }}
