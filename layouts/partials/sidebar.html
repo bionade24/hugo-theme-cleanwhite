@@ -32,7 +32,33 @@
         <div class="short-about">
             {{ with .Site.Params.sidebar_avatar }}
             <a href="{{ "/top/about" | relLangURL }}">
-               <img src="{{ . | relURL }}" alt="avatar" style="cursor: pointer" />
+               <picture>
+                   {{ $isJPG := eq (path.Ext . ) ".jpg" }}
+                   {{ $isPNG := eq (path.Ext . ) ".png" }}
+
+                   {{ if ($isJPG) -}}
+                     {{ $webpPath:= replace . ".jpg" ".webp" }}
+                     {{ $webpPathStatic:= printf "static/%s" $webpPath }}
+
+                     {{ if (fileExists $webpPathStatic) -}}
+                       <source srcset="{{ $webpPath | relURL }}" type="image/webp" alt="avatar" style="cursor: pointer" >
+                     {{- end }}
+                   {{- end }}
+
+                   {{ if ($isPNG) -}}
+                     {{ $webpPath:= replace . ".png" ".webp" }}
+                     {{ $webpPathStatic:= printf "static/%s" $webpPath }}
+
+                     {{ if (fileExists $webpPathStatic) -}}
+                       <source srcset="{{ $webpPath | relURL }}" type="image/webp" alt="avatar" style="cursor: pointer" >
+                     {{- end }}
+                   {{- end }}
+
+                   {{ $img := imageConfig (add "/static/" (. | relURL)) }}
+
+                   <img
+                     src="{{ . | relURL }}" alt="avatar" style="cursor: pointer" />
+                 </picture>
             </a>
             {{ end }}
             {{ with .Site.Params.sidebar_about_description }}
