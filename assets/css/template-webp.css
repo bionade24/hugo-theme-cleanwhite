@@ -1,0 +1,17 @@
+.no-webp .intro-header {
+        background-image: url('{{ .Site.Params.header_image | relURL }}');
+}
+
+.webp .intro-header {
+    {{ $webpPath:= replace .Site.Params.header_image ".jpg" ".webp" }}
+    {{ $webpPathStatic:= printf "static/%s" $webpPath }}
+    {{ if (fileExists $webpPathStatic) }}
+        background-image: url('{{ $webpPath | relURL }}');
+    {{ else }}
+        background-image: url('{{ .Site.Params.header_image | relURL }}');
+    {{ end }}
+}
+
+.no-js .intro-header {
+        background-image: url('{{ .Site.Params.header_image | relURL }}');
+}
